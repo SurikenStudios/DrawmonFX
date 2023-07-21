@@ -1,6 +1,6 @@
 package drawmon;
 
-import java.util.Random;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -8,18 +8,28 @@ import java.util.concurrent.TimeUnit;
 public class Monstruo {
 
     private String nombre;
-    private int salud;
-    private int energia;
-    private int humor;
-    private int sabiduria;
-    private int atletismo;
-
+    protected int salud = 100;
+    protected int energia = 100;
+    protected  int humor = 100;
+    protected  int sabiduria = 0;
+    protected  int atletismo = 0;
+    protected  int hambre = 100;
+    protected boolean enfermo = false;
+    
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getHambre() {
+        return hambre;
+    }
+
+    public void setHambre(int hambre) {
+        this.hambre = hambre;
     }
 
     public int getSalud() {
@@ -71,21 +81,31 @@ public class Monstruo {
         this.atletismo = atletismo;
     }
 
+        public boolean isEnfermo() {
+        return enfermo;
+    }
+
+    public void setEnfermo(boolean enfermo) {
+        this.enfermo = enfermo;
+    }
+    
     public Monstruo() {
     }
 
     public Monstruo(String nombre) {
-        salud = 100;
-        energia = 100;
-        humor = 100;
-        sabiduria = 0;
-        atletismo = 0;
+        this.nombre = nombre;
+        this.salud = salud;
+        this.energia = energia;
+        this.humor = humor;
+        this.sabiduria = sabiduria;
+        this.atletismo = atletismo;
+        this.hambre=hambre;
     }
 
     //Metodo booleano aburrido
-    private boolean aburrido() {
+    public boolean aburrido() {
         boolean aburridoOk = false;
-        if (humor <= 30) {
+        if (humor <= 30 && humor > 0) {
             aburridoOk = true;
             System.out.println("¡Me aburro!");
         } else if (humor <= 0) {
@@ -95,39 +115,39 @@ public class Monstruo {
     }
 
     //Metodo muerto
-    private void muerto() {
+    public void muerto() {
         //resetea la creacion del monstruo pero no se hacerlo ahora mismo manu xD
-        System.out.println("Descansa en paz" + nombre);
+        System.out.println("Descansa en paz " + nombre);
     }
 
     //Metodo hambre 
-    private void hambriento() {
-        if (energia <= 70) {
+    public String hambriento() {
+        if (hambre <= 70 && hambre > 40) {
             System.out.println("Tengo algo de hambre");
-        } else if (energia <= 40) {
+            
+        } else if (hambre <= 40 && hambre > 15) {
             System.out.println("Tengo hambre");
-        } else if (energia <= 15) {
+        } else if (hambre <= 15 && hambre > 0) {
             System.out.println("Tengo que comer pronto");
-        } else {
+            met50porCiento();
+        } else if (hambre <= 0){
             System.out.println("Ay mi panza... Agh");
             muerto();
-        }
+            }
+        return null;
     }
 
-    //Metodo enfermo
-    private void enfermo() {
 
-    }
 
     //Metodo para randomizar otro metodo xD
     public void met50porCiento() {
-        Random random = new Random();
-        double probabilidad = random.nextDouble(); // Genera un número aleatorio entre 0 (inclusive) y 1 (exclusive)
-
-        if (probabilidad < 0.5) {
-            enfermo(); }
+    int x = (int) (Math.random() * 2 + 1);
+        switch (x) {
+            case 1 -> setEnfermo(true);
+            case 2 -> System.out.println("Y me duele");
+        }
     }
-
+    
     // TEMPORIZADOR
     public void iniciarTemporizador(int tiempoInicial, int tiempoTemp) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -135,6 +155,7 @@ public class Monstruo {
         // Definir la tarea que se ejecutará
         Runnable tarea = () -> {
             System.out.println("¡Tarea ejecutada!");
+            muerto();
             // Aquí colocas el código que deseas ejecutar cada vez que se cumpla el temporizador.
         };
 
@@ -153,4 +174,16 @@ public class Monstruo {
         // Detener el temporizador después de 5 horas
         scheduler.shutdown();
     }
+
+    @Override
+    public String toString() {
+        return "Monstruo{" + "nombre=" + nombre + ", salud=" + salud + ", energia=" + energia + ", humor=" + humor + ", sabiduria=" + sabiduria + ", atletismo=" + atletismo + ", hambre=" + hambre + ", enfermo=" + enfermo + '}';
+    }
+
+  
+
+    
+
+
+
 }
