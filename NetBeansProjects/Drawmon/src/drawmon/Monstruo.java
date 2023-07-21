@@ -15,6 +15,8 @@ public class Monstruo {
     protected  int atletismo = 0;
     protected  int hambre = 100;
     protected boolean enfermo = false;
+    protected boolean aburrido = false;
+    protected boolean muerto = false;
     
     public String getNombre() {
         return nombre;
@@ -88,6 +90,33 @@ public class Monstruo {
     public void setEnfermo(boolean enfermo) {
         this.enfermo = enfermo;
     }
+
+    public boolean isMuerto() {
+        if (muerto = true){
+        System.out.println("Descansa en paz " + nombre);
+        
+        }
+        return muerto;
+    }
+
+    public void setMuerto(boolean muerto) {
+        this.muerto = muerto;
+    }
+
+    public boolean isAburrido() {
+          if (humor <= 30 && humor > 0) {
+            aburrido = true;
+            System.out.println("¡Me aburro!");
+        } else if (humor <= 0) {
+            setMuerto(true);
+            isMuerto();
+        }  
+        return aburrido;
+    }
+
+    public void setAburrido(boolean aburrido) {
+        this.aburrido = aburrido;
+    }
     
     public Monstruo() {
     }
@@ -102,23 +131,6 @@ public class Monstruo {
         this.hambre=hambre;
     }
 
-    //Metodo booleano aburrido
-    public boolean aburrido() {
-        boolean aburridoOk = false;
-        if (humor <= 30 && humor > 0) {
-            aburridoOk = true;
-            System.out.println("¡Me aburro!");
-        } else if (humor <= 0) {
-            muerto();
-        }
-        return aburridoOk;
-    }
-
-    //Metodo muerto
-    public void muerto() {
-        //resetea la creacion del monstruo pero no se hacerlo ahora mismo manu xD
-        System.out.println("Descansa en paz " + nombre);
-    }
 
     //Metodo hambre 
     public String hambriento() {
@@ -132,7 +144,8 @@ public class Monstruo {
             met50porCiento();
         } else if (hambre <= 0){
             System.out.println("Ay mi panza... Agh");
-            muerto();
+            setMuerto(true);
+            isMuerto();
             }
         return null;
     }
@@ -178,13 +191,6 @@ public class Monstruo {
 
     @Override
     public String toString() {
-        return "Monstruo{" + "nombre=" + nombre + ", salud=" + salud + ", energia=" + energia + ", humor=" + humor + ", sabiduria=" + sabiduria + ", atletismo=" + atletismo + ", hambre=" + hambre + ", enfermo=" + enfermo + '}';
+        return "Monstruo{" + "nombre=" + nombre + ", salud=" + salud + ", energia=" + energia + ", humor=" + humor + ", sabiduria=" + sabiduria + ", atletismo=" + atletismo + ", hambre=" + hambre + ", enfermo=" + enfermo + ", aburrido=" + isAburrido() + '}';
     }
-
-  
-
-    
-
-
-
 }
