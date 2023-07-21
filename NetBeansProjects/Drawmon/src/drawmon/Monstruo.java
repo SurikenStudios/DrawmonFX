@@ -140,6 +140,7 @@ public class Monstruo {
 
 
     //Metodo para randomizar otro metodo xD
+   
     public void met50porCiento() {
     int x = (int) (Math.random() * 2 + 1);
         switch (x) {
