@@ -116,7 +116,7 @@ public class Monstruo {
 
     //Metodo enfermo
     private void enfermo() {
-w
+
     }
 
     //Metodo para randomizar otro metodo xD
