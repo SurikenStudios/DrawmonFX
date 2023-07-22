@@ -1,22 +1,16 @@
 package drawmon;
 
 import java.util.Scanner;
+import javax.swing.JFrame;
 
 public class Drawmon {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-
-        Monstruo m = new Monstruo();
-        
-        System.out.println("Ponle nombre");
-        m.setNombre("Pepe");
-        
-        m.setHambre(10);
-        m.hambriento();
-        System.out.println(m.toString());
-
+        JFrame frame = new JFrame("Dibujo libre");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 800);
+        frame.add(new MyPanel());
+        frame.setVisible(true);
     }
-
 }
