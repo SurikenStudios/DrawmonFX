@@ -15,7 +15,7 @@ public class Temporizador {
         // Definir la tarea que se ejecutará
         Runnable tarea = () -> {
             System.out.println("¡Tarea ejecutada!");
-            m.muerto();
+            m.setMuerto(true);
             // Aquí colocas el código que deseas ejecutar cada vez que se cumpla el temporizador.
         };
 

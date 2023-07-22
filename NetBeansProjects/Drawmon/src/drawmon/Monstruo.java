@@ -101,6 +101,9 @@ public class Monstruo {
 
     public void setMuerto(boolean muerto) {
         this.muerto = muerto;
+        if( muerto = true) {
+            isMuerto();
+        }
     }
 
     public boolean isAburrido() {
@@ -109,7 +112,6 @@ public class Monstruo {
             System.out.println("¡Me aburro!");
         } else if (humor <= 0) {
             setMuerto(true);
-            isMuerto();
         }  
         return aburrido;
     }
@@ -145,7 +147,6 @@ public class Monstruo {
         } else if (hambre <= 0){
             System.out.println("Ay mi panza... Agh");
             setMuerto(true);
-            isMuerto();
             }
         return null;
     }
@@ -169,7 +170,7 @@ public class Monstruo {
         // Definir la tarea que se ejecutará
         Runnable tarea = () -> {
             System.out.println("¡Tarea ejecutada!");
-            muerto();
+            setMuerto(true);
             // Aquí colocas el código que deseas ejecutar cada vez que se cumpla el temporizador.
         };
 
