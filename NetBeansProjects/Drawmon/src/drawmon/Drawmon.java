@@ -16,12 +16,6 @@ import javax.swing.JFrame;
 public class Drawmon {
     public static void main(String[] args) {
        
-        // ESTO LLAMA AL LOGIN (SIN TERMINAR)
-        
-//        Login l = new Login();
-//        l.setVisible(true);
-//        l.setLocationRelativeTo(null);
-       
         // Todo esto es lo de la pantalla para dibujar
         
         JFrame frame = new JFrame("Dibujo libre");
