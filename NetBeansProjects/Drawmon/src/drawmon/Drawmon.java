@@ -1,5 +1,6 @@
 package drawmon;
 
+import igu.Login;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,15 @@ import javax.swing.JFrame;
 
 public class Drawmon {
     public static void main(String[] args) {
+       
+        // ESTO LLAMA AL LOGIN (SIN TERMINAR)
+        
+//        Login l = new Login();
+//        l.setVisible(true);
+//        l.setLocationRelativeTo(null);
+       
+        // Todo esto es lo de la pantalla para dibujar
+        
         JFrame frame = new JFrame("Dibujo libre");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
@@ -39,7 +49,6 @@ public class Drawmon {
                 frame.dispose();
             }
         });
-        
         
         frame.add(doneButton, BorderLayout.SOUTH);
         

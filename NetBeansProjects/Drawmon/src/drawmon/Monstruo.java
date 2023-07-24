@@ -1,6 +1,5 @@
 package drawmon;
 
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,14 +9,30 @@ public class Monstruo {
     private String nombre;
     protected int salud = 100;
     protected int energia = 100;
-    protected  int humor = 100;
-    protected  int sabiduria = 0;
-    protected  int atletismo = 0;
-    protected  int hambre = 100;
+    protected int humor = 100;
+    protected int sabiduria = 0;
+    protected int atletismo = 0;
+    protected int hambre = 100;
     protected boolean enfermo = false;
     protected boolean aburrido = false;
     protected boolean muerto = false;
+    protected boolean hambriento = false;
+    protected boolean cansado = false;
+    protected boolean dormido = false;
     
+    public Monstruo() {
+    }
+
+    public Monstruo(String nombre) {
+        this.nombre = nombre;
+        this.salud = salud;
+        this.energia = energia;
+        this.humor = humor;
+        this.sabiduria = sabiduria;
+        this.atletismo = atletismo;
+        this.hambre = hambre;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -83,7 +98,7 @@ public class Monstruo {
         this.atletismo = atletismo;
     }
 
-        public boolean isEnfermo() {
+    public boolean isEnfermo() {
         return enfermo;
     }
 
@@ -92,106 +107,113 @@ public class Monstruo {
     }
 
     public boolean isMuerto() {
-        if (muerto = true){
-        System.out.println("Descansa en paz " + nombre);
-        
+        if (muerto = true) {
+            System.out.println("Descansa en paz " + nombre);
+
         }
         return muerto;
     }
 
     public void setMuerto(boolean muerto) {
         this.muerto = muerto;
-        if( muerto = true) {
+        if (muerto = true) {
             isMuerto();
         }
     }
 
     public boolean isAburrido() {
-          if (humor <= 30 && humor > 0) {
+        if (humor <= 30 && humor > 0) {
             aburrido = true;
             System.out.println("¡Me aburro!");
         } else if (humor <= 0) {
             setMuerto(true);
-        }  
+        }
         return aburrido;
     }
 
     public void setAburrido(boolean aburrido) {
         this.aburrido = aburrido;
-    }
-    
-    public Monstruo() {
-    }
-
-    public Monstruo(String nombre) {
-        this.nombre = nombre;
-        this.salud = salud;
-        this.energia = energia;
-        this.humor = humor;
-        this.sabiduria = sabiduria;
-        this.atletismo = atletismo;
-        this.hambre=hambre;
+        if (aburrido = true) {
+            isAburrido();
+        }
     }
 
-
-    //Metodo hambre 
-    public String hambriento() {
+    public boolean isHambriento() {
         if (hambre <= 70 && hambre > 40) {
             System.out.println("Tengo algo de hambre");
-            
-        } else if (hambre <= 40 && hambre > 15) {
+        } else if (hambre <= 30 && hambre > 15) {
+            hambriento = true;
             System.out.println("Tengo hambre");
         } else if (hambre <= 15 && hambre > 0) {
             System.out.println("Tengo que comer pronto");
-            met50porCiento();
-        } else if (hambre <= 0){
+            hambriento = true;
+            posibleEnfermo();
+        } else if (hambre <= 0) {
             System.out.println("Ay mi panza... Agh");
             setMuerto(true);
-            }
-        return null;
-    }
-
-
-
-    //Metodo para randomizar otro metodo xD
-   
-    public void met50porCiento() {
-    int x = (int) (Math.random() * 2 + 1);
-        switch (x) {
-            case 1 -> setEnfermo(true);
-            case 2 -> System.out.println("Y me duele");
         }
+        return hambriento;
     }
+
+    public void setHambriento(boolean hambriento) {
+        this.hambriento = hambriento;
+    }
+
+    public boolean isCansado() {
+        if(energia <= 30 && energia > 0) {
+            
+        }
+        return cansado;
+    }
+
+    public void setCansado(boolean cansado) {
+        this.cansado = cansado;
+    }
+
     
-    // TEMPORIZADOR
-    public void iniciarTemporizador(int tiempoInicial, int tiempoTemp) {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-        // Definir la tarea que se ejecutará
-        Runnable tarea = () -> {
-            System.out.println("¡Tarea ejecutada!");
-            setMuerto(true);
-            // Aquí colocas el código que deseas ejecutar cada vez que se cumpla el temporizador.
-        };
-
-        // Programar la tarea para que se ejecute cada cierto tiempo
-        // tiempoInicial = Delay inicial antes de la primera ejecución (en horas)
-        // intervaloTiempo = Intervalo entre ejecuciones (en horas)
-        scheduler.scheduleAtFixedRate(tarea, tiempoInicial, tiempoTemp, TimeUnit.HOURS);
-
-        // Esperar un tiempo para ver los resultados
-        try {
-            Thread.sleep(5); // Detener el temporizador después de 5 horas para que no siga ejecutándose indefinidamente
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    //Metodo para randomizar enfermedad 50%
+    
+    public void posibleEnfermo() {
+        int x = (int) (Math.random() * 2 + 1);
+        switch (x) {
+            case 1 ->
+                setEnfermo(true);
+            case 2 ->
+                System.out.println("");
         }
+    }
 
-        // Detener el temporizador después de 5 horas
-        scheduler.shutdown();
+    public static int met33porCiento() {
+        int x = (int) (Math.random() * 3 + 1);
+        return x;
+    }
+
+    public void entAtletismo(Monstruo m) {
+
+        if (m.enfermo = true) {
+            m.energia -= 20;
+            m.atletismo = m.atletismo + met33porCiento() - 1;
+            m.hambre -= 15;
+        } else if (m.aburrido = true) {
+            m.energia -= 15;
+            m.atletismo = m.atletismo + met33porCiento();
+            m.hambre -= 15;
+            m.humor += 10;
+        } else if (m.cansado = true) {
+            m.energia -= 15;
+            m.atletismo = m.atletismo + met33porCiento() - 1;
+            m.hambre -= 10;
+            posibleEnfermo();
+        } else if (m.hambriento = true) {
+            m.energia -= 20;
+            m.atletismo = m.atletismo + met33porCiento() - 1;
+            m.hambre -= 20;
+        }
     }
 
     @Override
     public String toString() {
         return "Monstruo{" + "nombre=" + nombre + ", salud=" + salud + ", energia=" + energia + ", humor=" + humor + ", sabiduria=" + sabiduria + ", atletismo=" + atletismo + ", hambre=" + hambre + ", enfermo=" + enfermo + ", aburrido=" + isAburrido() + '}';
     }
+
 }
