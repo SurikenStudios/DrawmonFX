@@ -1,6 +1,6 @@
 package drawmon;
 
-import igu.Login;
+import igu.Inicio;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

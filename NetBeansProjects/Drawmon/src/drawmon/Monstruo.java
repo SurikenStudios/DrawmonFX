@@ -1,8 +1,7 @@
 package drawmon;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Monstruo {
 
@@ -13,14 +12,19 @@ public class Monstruo {
     protected int sabiduria = 0;
     protected int atletismo = 0;
     protected int hambre = 100;
+    protected int peso = 10;
     protected boolean enfermo = false;
     protected boolean aburrido = false;
     protected boolean muerto = false;
     protected boolean hambriento = false;
     protected boolean cansado = false;
     protected boolean dormido = false;
+
+    Timer restaSalud;
+    Timer restaHambre;
     
     public Monstruo() {
+        resta10HambreXHora();
     }
 
     public Monstruo(String nombre) {
@@ -31,8 +35,38 @@ public class Monstruo {
         this.sabiduria = sabiduria;
         this.atletismo = atletismo;
         this.hambre = hambre;
+        
+        resta10HambreXHora();
     }
 
+    // Metodo resta 10 de salud cada hora -----------------------------------------------------------------------------------
+    
+    public void resta10SaludXHora() {
+        restaSalud = new Timer();
+        restaSalud.schedule(new RemindTaskSalud(), 0, 60*60*1000);
+    }
+
+    class RemindTaskSalud extends TimerTask {
+        public void run() {
+            salud -= 10;
+        }
+    }
+   
+    // Metodo resta 10 de hambre cada hora -------------------------------------------------------------------------------------
+    
+  private void resta10HambreXHora(){
+      restaHambre = new Timer();
+      restaHambre.schedule(new RemindTaskHambre(), 0, 60*60*1000);
+  }
+  
+  class RemindTaskHambre extends TimerTask {
+      public void run(){
+          hambre -=10;
+      }
+  }
+  
+  // GETTERS Y SETTERS -----------------------------------------------------------------------------------------------------------
+    
     public String getNombre() {
         return nombre;
     }
@@ -98,7 +132,20 @@ public class Monstruo {
         this.atletismo = atletismo;
     }
 
+    public int getPeso() {
+        return peso;
+    }
+
+    public void setPeso(int peso) {
+        this.peso = peso;
+    }
+
+    // ENFERMO ----------------------------------------------------------------------------------------------------------
     public boolean isEnfermo() {
+        if (enfermo = true) {
+            System.out.println("Estoy malito");
+            resta10SaludXHora();
+        }
         return enfermo;
     }
 
@@ -106,6 +153,8 @@ public class Monstruo {
         this.enfermo = enfermo;
     }
 
+    // MUERTO ---------------------------------------------------------------------------------------------------------- SIN TERMINAR
+    
     public boolean isMuerto() {
         if (muerto = true) {
             System.out.println("Descansa en paz " + nombre);
@@ -121,6 +170,8 @@ public class Monstruo {
         }
     }
 
+    // ABURRIDO ----------------------------------------------------------------------------------------------------------
+    
     public boolean isAburrido() {
         if (humor <= 30 && humor > 0) {
             aburrido = true;
@@ -138,6 +189,7 @@ public class Monstruo {
         }
     }
 
+    // HAMBRIENTO ----------------------------------------------------------------------------------------------------------
     public boolean isHambriento() {
         if (hambre <= 70 && hambre > 40) {
             System.out.println("Tengo algo de hambre");
@@ -159,19 +211,34 @@ public class Monstruo {
         this.hambriento = hambriento;
     }
 
+    // CANSADO ----------------------------------------------------------------------------------------------------------
     public boolean isCansado() {
-        if(energia <= 30 && energia > 0) {
-            
+        if (energia <= 30 && energia > 0) {
+            cansado = true;
+        } else if (energia <= 0) {
+            setDormido(true);
         }
         return cansado;
     }
 
     public void setCansado(boolean cansado) {
         this.cansado = cansado;
+        if (cansado = true) {
+            isCansado();
+        }
     }
 
-    
-    //Metodo para randomizar enfermedad 50%
+    // DORMIDO ---------------------------------------------------------------------------------------------------------- SIN TERMINAR 
+    public boolean isDormido() {
+
+        return dormido;
+    }
+
+    public void setDormido(boolean dormido) {
+        this.dormido = dormido;
+    }
+
+    //Metodo para randomizar enfermedad 50% -------------------------------------------------------------------------------------
     
     public void posibleEnfermo() {
         int x = (int) (Math.random() * 2 + 1);
@@ -187,30 +254,109 @@ public class Monstruo {
         int x = (int) (Math.random() * 3 + 1);
         return x;
     }
+    
+    
 
-    public void entAtletismo(Monstruo m) {
+    // ENTRENAR ATLETISMO --------------------------------------------------------------------------------------------------------
+    
+    public void entAtletismo() {
 
-        if (m.enfermo = true) {
-            m.energia -= 20;
-            m.atletismo = m.atletismo + met33porCiento() - 1;
-            m.hambre -= 15;
-        } else if (m.aburrido = true) {
-            m.energia -= 15;
-            m.atletismo = m.atletismo + met33porCiento();
-            m.hambre -= 15;
-            m.humor += 10;
-        } else if (m.cansado = true) {
-            m.energia -= 15;
-            m.atletismo = m.atletismo + met33porCiento() - 1;
-            m.hambre -= 10;
+        if (enfermo = true) {
+            energia -= 20;
+            atletismo = atletismo + met33porCiento() - 1;
+            hambre -= 15;
+            humor += 10;
+            peso -= 5;
+        } else if (aburrido = true) {
+            energia -= 15;
+            atletismo = atletismo + met33porCiento();
+            hambre -= 15;
+            humor += 10;
+            peso -= 5;
+        } else if (cansado = true) {
+            energia -= 15;
+            atletismo = atletismo + met33porCiento() - 2;
+            hambre -= 10;
+            humor += 10;
+            peso -= 5;
             posibleEnfermo();
-        } else if (m.hambriento = true) {
-            m.energia -= 20;
-            m.atletismo = m.atletismo + met33porCiento() - 1;
-            m.hambre -= 20;
-        }
+        } else if (hambriento = true) {
+            energia -= 20;
+            atletismo = atletismo + met33porCiento() - 1;
+            hambre -= 20;
+            humor += 10;
+            peso -= 5;
+        } else 
+            energia -= 15;
+            atletismo = atletismo + met33porCiento();
+            hambre -= 15;
+            humor += 10;
+            peso -= 10;
     }
+    
+    // ENTRENAR SABIDURIA -------------------------------------------------------------------------------------------------------- SIN TERMINAR
 
+    public void entSabiduria() {
+        if (enfermo = true) {
+            energia -= 20;
+            sabiduria = sabiduria + met33porCiento() - 1;
+            hambre -= 15;
+            humor += 10;
+        } else if (aburrido = true) {
+            energia -= 15;
+            sabiduria = sabiduria + met33porCiento() - 2;
+            hambre -= 15;
+        } else if (cansado = true) {
+            energia -= 15;
+            sabiduria = sabiduria + met33porCiento();
+            hambre -= 10;
+            humor += 10;
+        } else if (hambriento = true) {
+            energia -= 20;
+            sabiduria = sabiduria + met33porCiento() - 1;
+            hambre -= 20;
+            humor += 10;
+        } else 
+            energia -= 20;
+            sabiduria = sabiduria + met33porCiento() - 1;
+            hambre -= 20;
+            humor += 10;
+    }
+    
+    // JUGAR -------------------------------------------------------------------------------------------------------- SIN TERMINAR
+    
+    public void jugar(){
+         if (enfermo = true) {
+            
+        } else if (cansado = true) {
+         
+        } else if (hambriento = true) {
+           
+        } else 
+            
+    }
+    
+    //  DORMIR -------------------------------------------------------------------------------------------------------- SIN TERMINAR
+    
+    public void dormir (){
+            if (enfermo = true) {
+            
+        }  else 
+    }
+    
+    // ALIMENTAR -------------------------------------------------------------------------------------------------------- SIN TERMINAR
+    
+    public void alimentar(){
+          
+    }
+    
+    // HIGIENIZAR -------------------------------------------------------------------------------------------------------- SIN TERMINAR
+    
+    public void higienizar(){
+        
+    }
+    
+    
     @Override
     public String toString() {
         return "Monstruo{" + "nombre=" + nombre + ", salud=" + salud + ", energia=" + energia + ", humor=" + humor + ", sabiduria=" + sabiduria + ", atletismo=" + atletismo + ", hambre=" + hambre + ", enfermo=" + enfermo + ", aburrido=" + isAburrido() + '}';
